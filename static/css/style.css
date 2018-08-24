@@ -10,6 +10,9 @@
     background-position: center;
     -webkit-background-size: cover;
     background-size: cover;
+    padding-right: 0;
+    padding-top: 0;
+    font-size: 55px;
 }
 
 body {
@@ -21,6 +24,11 @@ body {
   body,
   html {
     height: 100%;
+  }
+
+  #permitMap {
+    height: 50%;
+    width: 50%;
   }
 
   .legend {
@@ -57,5 +65,8 @@ body {
   }
   
   h1 {
-    text-align: center;
+    text-align: right;
+    margin-right: 0px;
+    margin-left: 300px;
+    height: 50%;
   }
