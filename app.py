@@ -2,13 +2,16 @@ import os
 
 import pandas as pd
 import numpy as np
+import json
+from pprint import pprint
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
+from sqlalchemy import inspect
 from sqlalchemy import create_engine
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -23,13 +26,21 @@ db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
 Base = automap_base()
+
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
+inspector = inspect(db.engine)
+print(inspector.get_table_names())
 
 # Save references to each table
 building_permits = Base.classes.building_permits
-Samples = Base.classes.samples
-
+demo_2010 = Base.classes.demo_2010
+demo_2011 = Base.classes.demo_2011
+demo_2012 = Base.classes.demo_2012
+demo_2013 = Base.classes.demo_2013
+demo_2014 = Base.classes.demo_2014
+demo_2015 = Base.classes.demo_2015
+demo_2016 = Base.classes.demo_2016
 
 @app.route("/")
 def index():
@@ -38,15 +49,23 @@ def index():
 
 
 @app.route("/building_permits")
-def names():
+def building_permit():
     """This endpoint returns a json of all building permit data in the db."""
 
+    #Generate the table query statement with FlaskSQLAlchemy
+    stmt = db.session.query(building_permits).statement
+    #print(stmt)
+    list_of_json = []
     # Use Pandas to perform the sql query
-    stmt = db.session.query(Samples).statement
     df = pd.read_sql_query(stmt, db.session.bind)
-
-    # Return a list of the column names (sample names)
-    return jsonify(list(df.columns)[2:])
+    i = 0
+    for index, row in df.iterrows():
+        rowdict = row.to_dict()
+        list_of_json.append(rowdict)
+    pprint(list_of_json)
+    # Use json.dumps() to create an array of JS objects
+    json_array = json.dumps(list_of_json)
+    return json_array
 
 @app.route("/samples/<sample>")
 def samples(sample):
@@ -67,4 +86,4 @@ def samples(sample):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
