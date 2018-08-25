@@ -17,6 +17,26 @@ demoMap.messagebox.options.timeout=5000;
 grabGeoJSON();
 demo_updateMap(2010);
 
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 10, 25, 40, 55, 70, 85, 100],
+        labels = [];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(demoMap);
+
+
 // Initialize the chloropleth 
 function parseGeoJSON(featureCollection) {
   var features = featureCollection.features;
@@ -52,17 +72,14 @@ function getColor(d) {
 }
 
 function demo_jsonCallback(response) {
-  console.log('Received!');
-  console.log(response);
   for (var i = 0; i < response.length; i++) {
     var _tract = response[i];
     var tract_id = _tract['Census Tract']
     var pcnt_white = _tract['% White']
     var path = document.getElementById(tract_id)
     if (path) {
-      console.log('Found one!')
-      path.setAttribute('fillColor',getColor(pcnt_white))
-      path.setAttribute('fillOpacity', 0.99)
+      path.setAttribute('fill', getColor(pcnt_white));
+      path.setAttribute('fill-opacity', 0.7);
     };
     };
 };
@@ -72,24 +89,24 @@ function demo_updateMap(yearint) {
   d3.json(dataSource, demo_jsonCallback);
 };
 // Declare initial global variable to track map update
-update_counter = 0;
+update_counter1 = 0;
 
 
-// L.control.liveupdate ({
-//   update_map: function() {
-//     var year_array = ['06','07','08','09','10','11','12','13','14','15','16','17'];
-//     var current_year = year_array[update_counter];
-//     if (update_counter) {
-//       demoMap.messagebox.show(`The current year displayed is: 20${current_year}`)
-//     }
-//     console.log(`Now displaying data for year 20${current_year}`)
-//     demo_updateMap(current_year);
-//     update_counter += 1;
-//     if (update_counter === year_array.length) {
-//       update_counter = 0;
-//       console.log("WE ROLLIN OVER!");
-//     }
-//   },
-//   position: 'topleft',
-//   interval: 5000
-// }).addTo(demoMap).startUpdating();
+L.control.liveupdate ({
+  update_map: function() {
+    var year_array1 = ['2010','2011','2012','2013','2014','2015','2016'];
+    var current_year1 = year_array1[update_counter1];
+    if (update_counter1) {
+      demoMap.messagebox.show(`The current year displayed is: ${current_year1}`)
+    }
+    console.log(`Now displaying data for year ${current_year1}`)
+    demo_updateMap(current_year1);
+    update_counter1 += 1;
+    if (update_counter1 === year_array1.length) {
+      update_counter1 = 0;
+      console.log("WE ROLLIN OVER!");
+    }
+  },
+  position: 'topleft',
+  interval: 5000
+}).addTo(demoMap).startUpdating();

@@ -30,6 +30,12 @@ body {
     height: 100%;
   }
 
+  i {
+    height: 18px !important;
+    width: 18px !important;
+    padding-right: 10px;
+    z-index: 1000;
+  }
   #permitMap {
     float: left;
     height: 500px;
@@ -40,6 +46,12 @@ body {
     height: 500px;
     width: 500px;
     margin-left: 100px;
+  }
+  #tifMap {
+    float: center;
+    height: 500px;
+    width: 500px;
+    margin-left: 100px;  
   }
   .legend {
     padding: 6px 8px;
