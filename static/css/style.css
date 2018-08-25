@@ -1,6 +1,3 @@
-
-
-
 .jumbotron {
     background-image: url("../images/jumbotron_img.jpeg");
     background-color: #17234E;
@@ -15,9 +12,16 @@
     font-size: 55px;
 }
 
+
+
 body {
     padding: 0px;
     margin: 0px;
+  }
+
+  p {
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
   }
 
   #map,
@@ -27,10 +31,16 @@ body {
   }
 
   #permitMap {
-    height: 50%;
-    width: 50%;
+    float: left;
+    height: 500px;
+    width: 500px;
   }
-
+  #demoMap {
+    float: left;
+    height: 500px;
+    width: 500px;
+    margin-left: 100px;
+  }
   .legend {
     padding: 6px 8px;
     font: 12px Arial, Helvetica, sans-serif;
@@ -69,4 +79,16 @@ body {
     margin-right: 0px;
     margin-left: 300px;
     height: 50%;
+  }
+  #slider-timestamp {
+  z-index: 1000 !important;
+  }
+  .ui-slider-handle {
+    height: 10px !important;
+  }
+  .leaflet-control-messagebox {
+    display: none; /* Initially hidden */
+    border: 2px solid rgba(15, 18, 182, 0.616);
+    background-color: white;
+    padding: 3px 10px;
   }
