@@ -1,5 +1,4 @@
 dataSource = "/tifdata";
-
 d3.json(dataSource, function(data) {
   createProjectMarkers(data["features"]);
   //console.log(data);
@@ -58,5 +57,3 @@ function createProjectMarkers(dataStuffs) {
     })
     return myMap
   };
-
- 
