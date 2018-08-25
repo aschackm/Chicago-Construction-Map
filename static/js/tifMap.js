@@ -1,115 +1,63 @@
-// Map of TIF Projects and Boundaries
 
-// Parsing  Project Data
-tifData = "../data/tifProjects.geojson"  /* INSERT FLASK JSON HERE */
-d3.json(tifData, function(data) {
-  createProjectMarkers(data.features);
-});
-// Parsing  Boundary Data
-boundData = "../data/tif_boundaries.geojson"  /* INSERT FLASK JSON HERE */
-d3.json(boundData, function(data) {
-  //createBoundaryFeatures(data.features);
+dataSource = "../data/tifProjects.geojson";
+
+d3.json(dataSource, function(data) {
+  createProjectMarkers(data["features"]);
+  //console.log(data);
 });
 
-// Binding popups, adding markers, calling create map function
-function createProjectMarkers(tifData) {
+function createProjectMarkers(dataStuffs) {
   var marker_array = [];
   var _Map = createMap();
-  tifData.forEach(function(feature) {
-    var lon = feature.geometry.coordinates[0];
-    var lat = feature.geometry.coordinates[1];
-    var latLng = L.latLng(lat,lon);
-    var marker = L.circleMarker(latLng);
-    marker.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> ${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`);
-    marker_array.push(marker);
-  });
+  dataStuffs.forEach(function(feature) {
+    //console.log(feature)
+    
+      var lon = feature.geometry.coordinates[0];
+      var lat = feature.geometry.coordinates[1];
+      //console.log(lon);
+
+  //     try{
+         var latLng = L.latLng(lat,lon);
+  //     }
+  //     catch(e) {console.log("skipping over nans");
+  //       return;
+  //     };
+       //console.log(latLng);
+      var Cost = parseInt(feature.properties.APPROVED_AMOUNT);
+      var logCost = Math.log10(Cost);
+      var costRadius = (Math.pow(logCost,2))*.25
+      //console.log(costRadius);
+      var marker = L.circleMarker(latLng, {
+        radius: costRadius,
+        fillColor: "red",
+        color: "black",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      });
+      marker.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> Approved for $${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`);
+      marker_array.push(marker);
   L.featureGroup(marker_array).addTo(_Map);
-};
-// Binding popups, adding polygons, calling create map function
-function createBoundaryFeatures(boundData) {
-
-  function onEachFeature(feature, layer) {
-    layer.bindPopup(`<h3> ${feature.properties.name} </h3>`);
-  }
-
-  var boundaries = L.geoJSON(boundData, {
-    onEachFeature: onEachFeature
-  });
-
-  markers.addLayer(boundaries); /* THIS IS MOST LIKEY WRONG */
-  createMap(boundaries); /* NOT SURE IF THIS SHOULS BE CALLED AGAIN */
-};
-
-function createMap(projects, boundaries) {
-
-  // Define streetmap and darkmap layers
-
-  var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    maxZoom: 18,
-    id: "mapbox.streets",
-    accessToken: API_KEY
-  });
+  })};
 
 
+  function createMap(projects) {
 
-  var myMap = L.map("map", {
-    center: [41.8781, -87.6298],
-    zoom: 13,
-    layers: [streetmap]
-  })
-  return myMap
-};
-
-// STILL NEEDS HEATMAP AND SLIDER
-
-
-
-
-// L.heatLayer(latlngs, options)
-
-// tifProjects = tifData.map(function (p) { return [p[1], p[2]]; });
-// var a=L.heatLayer(tifProjects,{max: getCost(tifData,’Median Annual Household Income’), minOpacity: 0.05,
-// maxZoom: 18,
-// radius: 25,
-// blur: 15,
-// gradient: {
-// 0.2: ‘green’,
-// 0.60: ‘yellow’,
-// 1.0: ‘red’},maxZoom:14}).addTo(map);
-
-
-
-// var marker = L.circle(locations, { opacity: 0.01 }).bindTooltip(income+”,”+name , {className: ‘myCSSClass’}).addTo(map);
-// }
-
-
-// var myMap = L.map('map', {
-//     center: [41.8781, -87.6298],
-//     zoom: 13
-//   });
+    // Define streetmap and darkmap layers
   
-//   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-//     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-//     maxZoom: 18,
-//     id: 'mapbox.streets',
-//     accessToken: API_KEY
-//   }).addTo(myMap);
-
-
-
-// for (var i = 0; i < tifData.length; i++) {
-//   var a = tifData[i];
-//   var name=a[0];
-//   var income=a[3];
-//   }
+    var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+      attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+      maxZoom: 18,
+      id: "mapbox.streets",
+      accessToken: API_KEY
+    });
   
-  
-//   var maximum;
-//   function getCost(arr, prop) {
-//   for (var i=0 ; i<tifData.length ; i++) {
-//   if (!maximum || parseInt(tifData[i][prop]) > parseInt(maximum[prop]))
-//   maximum = tifData[i];
-//   }
-//   return maximum;
-//   }
+    var myMap = L.map("tifMap", {
+      center: [41.8781, -87.6298],
+      zoom: 13,
+      layers: [streetmap]
+    })
+    return myMap
+  };
+
+ 
