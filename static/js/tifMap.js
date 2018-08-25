@@ -3,28 +3,27 @@
 // Parsing  Project Data
 tifData = "../data/tifProjects.geojson"  /* INSERT FLASK JSON HERE */
 d3.json(tifData, function(data) {
-  createProjectFeatures(data.features);
+  createProjectMarkers(data.features);
 });
 // Parsing  Boundary Data
 boundData = "../data/tif_boundaries.geojson"  /* INSERT FLASK JSON HERE */
 d3.json(boundData, function(data) {
-  createBoundaryFeatures(data.features);
+  //createBoundaryFeatures(data.features);
 });
 
 // Binding popups, adding markers, calling create map function
-function createProjectFeatures(tifData) {
-
-  function onEachFeature(feature, layer) {
-    layer.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> ${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`);
-  }
-
-  var projects = L.geoJSON(tifData, {
-    onEachFeature: onEachFeature
+function createProjectMarkers(tifData) {
+  var marker_array = [];
+  var _Map = createMap();
+  tifData.forEach(function(feature) {
+    var lon = feature.geometry.coordinates[0];
+    var lat = feature.geometry.coordinates[1];
+    var latLng = L.latLng(lat,lon);
+    var marker = L.circleMarker(latLng);
+    marker.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> ${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`);
+    marker_array.push(marker);
   });
-
-  markers.addLayer(projects);
-  
-  createMap(projects);
+  L.featureGroup(marker_array).addTo(_Map);
 };
 // Binding popups, adding polygons, calling create map function
 function createBoundaryFeatures(boundData) {
@@ -44,29 +43,23 @@ function createBoundaryFeatures(boundData) {
 function createMap(projects, boundaries) {
 
   // Define streetmap and darkmap layers
-  var darkmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+
+  var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "mapbox.dark",
+    id: "mapbox.streets",
     accessToken: API_KEY
   });
 
-  // Define a baseMaps object to hold our base layers
-  var baseMaps = {
-    "Street Map": streetmap,
-    "Dark Map": darkmap
-  };
 
-  var overlayMaps = {
-    Projects: projects, 
-    Boundaries: boundaries
-  };
 
   var myMap = L.map("map", {
     center: [41.8781, -87.6298],
     zoom: 13,
-    layers: [streetmap, projects]
-  })};
+    layers: [streetmap]
+  })
+  return myMap
+};
 
 // STILL NEEDS HEATMAP AND SLIDER
 

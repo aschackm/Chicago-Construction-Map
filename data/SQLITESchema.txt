@@ -1,0 +1,101 @@
+CREATE TABLE demo_2010 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2011 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2012 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2013 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2014 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2015 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE demo_2016 (
+"ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+"Census Tract" FLOAT, 
+"Year" TEXT, 
+"% One Race" FLOAT, 
+"% White" FLOAT, 
+"% Black" FLOAT, 
+"% Native American" FLOAT, 
+"% Asian" FLOAT, 
+"% Hawaiin/Pacific Islander" FLOAT, 
+"% Other" FLOAT, 
+"% Two or More Races" FLOAT
+);
+CREATE TABLE building_permits (
+"key" INTEGER PRIMARY KEY AUTOINCREMENT,
+"ID" FLOAT,
+"PERMIT#" TEXT,
+"PERMIT_TYPE" TEXT,
+"ISSUE_DATE" TEXT,
+"ESTIMATED_COST" FLOAT,
+"LATITUDE" FLOAT,
+"LONGITUDE" FLOAT,
+"LOCATION" TEXT);
