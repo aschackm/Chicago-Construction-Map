@@ -1,5 +1,3 @@
-
-//dataSource = "../data/tifProjects.geojson";
 dataSource = "/tifdata";
 d3.json(dataSource, function(data) {
   createProjectMarkers(data["features"]);
@@ -35,7 +33,7 @@ function createProjectMarkers(dataStuffs) {
         opacity: 1,
         fillOpacity: 0.8
       });
-      marker.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> Approved for $${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`);
+      marker.bindPopup(`<h3> ${feature.properties.PROJECT_NAME} </h3><h4> Approved for $${feature.properties.APPROVED_AMOUNT} </h4><hr><p> ${feature.properties.PROJECT_DESCRIPTION} </p>`,{'maxHeight':'250'});
       marker_array.push(marker);
   L.featureGroup(marker_array).addTo(_Map);
   })};
@@ -59,5 +57,3 @@ function createProjectMarkers(dataStuffs) {
     })
     return myMap
   };
-
- 
