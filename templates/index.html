@@ -5,11 +5,18 @@
     <title>Building in Chicago</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js" integrity="sha256-65UqrlgGoRAnKfKRuriH3eeDrOhZgZo1SCenduc+SGo=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/tinuzz/leaflet-liveupdate/4bccd887/leaflet-liveupdate.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/tinuzz/leaflet-messagebox/b28cd708/leaflet-messagebox.js"></script>
   </head>
 <body>
     <div class="container">
 
-        <div class="jumbotron">
+        <div class="jumbotron text-right">
           <h1>TIF, Construction, and Population Migrations in Chicago</h1>
         </div>
         <div class="container-fluid">
@@ -20,33 +27,19 @@
                     </p>
                 </div> 
             </div>
-            <div class="fig">
-                <div class="col-md-6">
-                    <!-- INSERT IFRAME FOR MAP 1 -->
-                </div>
-            </div>
-            <div class="fig">
-                <div class="col-md-6">
-                    <!-- INSERT IFRAME FOR MAP 2 -->
-                </div>
-            </div>
-            <div class="fig">
-                <div class="col-md-6">
-                    <!-- INSERT IFRAME FOR MAP 3 -->
-                </div>
-            </div>
-            <div class="fig">
-                <div class="col-md-6">
-                    <!-- INSERT IFRAME FOR MAP 4 -->
-                </div>
-            </div>
-            <div class="fig">
-                <div class="col-md-6">
-                    <!-- INSERT IFRAME FOR MAP 5 -->
-                </div>
-            </div>
         </div>
-
+        <hr>
+        <h1>Building Permits & Demographic Changes</h1>
+        <div id="permitMap"></div>
+        <div id="demoMap"></div>
+        <br>
+        <hr>
+        <h1>TIF Project Map</h1>
+        <div id="tifMap"></div>
         <!-- SCRIPT TAGS FOR JS FILES IF NEEDED -->
+        <script type="text/javascript" src="../static/js/config.js"></script>        
+        <script type="text/javascript" src="../static/js/permitHeatmap.js"></script>
+        <script type="text/javascript" src="../static/js/demoChloropleth.js"></script>
+        <script type="text/javascript" src="../static/js/tifMap.js"></script>
 </body>
 </html>
